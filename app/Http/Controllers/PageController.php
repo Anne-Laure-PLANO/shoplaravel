@@ -12,15 +12,35 @@ class PageController extends Controller
     //
 
     public function home(){
-        return view('accueil');
+        $products = [
+            [
+                "nom" => "biscotte",
+                "nbProduits" => 20,
+                "etat" => true
+            ],
+            [
+                "nom" => "lait",
+                "nbProduits" => 10,
+                "etat" => true
+            ],
+            [
+                "nom" => "chocolat",
+                "nbProduits" => 0,
+                "etat" => false
+            ]
+        ];
+        return view('accueil', ['products' => $products]);
     }
 
     public function about(){
-        return 'Je suis une superbe description de la boutique !';
+        return view('about');
     }
 
     public function up(){
-        return '404 no found..';
+        return view('/layouts/app');
+    }
+    public function contact(){
+        return view('contact');
     }
 }
 ?>

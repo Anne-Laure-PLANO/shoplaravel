@@ -1,12 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('title', 'Accueil')
+
+@section('content')
     <h1>Gros titre de ma page</h1>
     <p>Ceci est mon paragraphe. Bienvenue.</p>
-</body>
-</html>
+
+    @foreach ($products as $key => $product)
+        <h2>Produit n° {{$key+1}}</h2>
+        @if ($product['etat'])
+            <p>Nom produit: {{$product['nom']}}</p>
+            <p>quantité produit : {{$product['nbProduits']}}</p>
+            <br>
+        @else
+        <p>Il n'y a plus de : {{$product['nom']}}</p>
+        @endif
+    @endforeach
+@endsection

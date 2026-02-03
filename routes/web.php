@@ -15,10 +15,7 @@ Route::get('/hello',function(){
 })->name('hello');
 
 
-Route::get('/about',function(){
-    $message = new PageController();
-    return $message->about();
-})->name('about');
+Route::get('/about',[PageController::class, 'about'])->name('about');
 
 Route::get('/home',[PageController::class,'home'])->name('home');
 
@@ -28,5 +25,8 @@ Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('adm
 
 Route::get('/up', [PageController::class, 'up'])->name('up');
 
+Route::get('/index', [ProductController::class, 'index'])->name('index');
+
+Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 
 ?>
