@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -22,15 +24,26 @@ class ProductController extends Controller
      */
     public function create() # pour appeler le formulaire de création d'un nouveau produit
     {
-        return view('')
+        $categories = Category::all();
+        return view('products/create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request) #récupère les infos nouveau produit pour insertion BDD
     {
-        //
+        $product = new Product();
+        $product->category_id = $request->category_id;
+        $product->name = $request->name;
+        $product->slug = Str::slug($request->name);
+        $product->description = $request->description;
+        $product->image = $request->image;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
+        $product->active = $request->active;
+        $product->save();
+    return redirect('/products');
     }
 
     /**

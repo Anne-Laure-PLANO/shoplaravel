@@ -12,7 +12,7 @@
         <div class="container-fluid">
 
             <!-- Logo à gauche -->
-            <a class="navbar-brand" href="/home">
+            <a class="navbar-brand" href="{{route('home')}}">
                 <img src="logo.png" alt="Logo" height="40">
             </a>
 
@@ -33,19 +33,19 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/admin">Administrateur</a>
+                        <a class="nav-link active" aria-current="page" href="{{route('admin.dashboard')}}">Administrateur</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/home">Accueil</a>
+                        <a class="nav-link active" aria-current="page" href="{{route('home')}}">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/index">Produits</a>
+                        <a class="nav-link" href="{{route('products.index')}}">Produits</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/contact">Contact</a>
+                        <a class="nav-link" href="{{route('contact')}}">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about">À propos</a>
+                        <a class="nav-link" href="{{route('about')}}">À propos</a>
                     </li>
                 </ul>
             </div>

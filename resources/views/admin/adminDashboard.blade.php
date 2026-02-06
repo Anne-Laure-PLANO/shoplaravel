@@ -4,6 +4,7 @@
 
 @section('content')
     <h1>Zone administrateur - gestion des produits</h1>
+    <a href="{{ route('products.create')}}"><button>Ajouter un nouveau produit</button> </a>
     @forelse($products as $product)
         <div>
             <h2>nom produit : {{$product->name}}</h2>

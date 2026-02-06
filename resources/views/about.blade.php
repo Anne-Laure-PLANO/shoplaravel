@@ -14,7 +14,7 @@
     <p>Notre équipe est composée de passionnés du commerce en ligne et du service client. Nous travaillons chaque jour pour améliorer notre boutique et vous offrir les dernières nouveautés.</p>
 
     <h2 class="mt-5 mb-3">Contactez-nous</h2>
-    <p>Vous avez des questions ou des suggestions ? N’hésitez pas à nous contacter via notre page <a href="/contact">Contact</a>. Nous serons ravis de vous répondre !</p>
+    <p>Vous avez des questions ou des suggestions ? N’hésitez pas à nous contacter via notre page <a href="{{route('contact')}}">Contact</a>. Nous serons ravis de vous répondre !</p>
 
 
 
