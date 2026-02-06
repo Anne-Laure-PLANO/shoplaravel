@@ -14,19 +14,25 @@ Route::get('/hello',function(){
     return 'Hello Laravel !';
 })->name('hello');
 
+#Informations générales :
+Route::get('/about',[PageController::class, 'about'])
+    ->name('about');
 
-Route::get('/about',[PageController::class, 'about'])->name('about');
+Route::get('/home',[PageController::class,'home'])
+    ->name('home');
 
-Route::get('/home',[PageController::class,'home'])->name('home');
+Route::get('/contact', [PageController::class, 'contact'])
+    ->name('contact');
 
-Route::get('/products/{produit}', [ProductController::class, 'show'])->name('products.show');
+#Profil Administrateur :
+#affichage général
+Route::get('/admin', [AdminController::class, 'dashboard'])
+    ->name('admin.dashboard');
 
-Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+#affichage produit sélectionné :
+Route::get('/admin/modifyProduct/{id}', [AdminController::class, 'modifyProduct'])
+    ->name('admin.modify.product');
 
-Route::get('/up', [PageController::class, 'up'])->name('up');
-
-Route::get('/index', [ProductController::class, 'index'])->name('index');
-
-Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+Route::resource('products', ProductController::class);
 
 ?>

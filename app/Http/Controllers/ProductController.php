@@ -3,22 +3,66 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
+
 
 class ProductController extends Controller
 {
-   
-    public function show($produit){
-        return 'Détail du produit n°'. $produit ;
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $products = Product::all();
+        return view('/products/index', compact('products'));
     }
 
-    public function index(){
-        $products = [
-            ['id' => 1,'nom' => 'Biscotte','prix' => 2.50],
-            ['id' => 2,'nom' => 'Lait','prix' => 1.80],
-            ['id' => 3,'nom' => 'Chocolat','prix' => 3.20],
-            ['id' => 4,'nom' => 'Pain','prix' => 1.50],
-            ['id' => 5,'nom' => 'Fromage','prix' => 4.00]
-        ];
-        return view('/products/index', compact('products'));
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create() # pour appeler le formulaire de création d'un nouveau produit
+    {
+        return view('')
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(int $id)
+    {
+        $product= Product::find($id);
+        return view('/products/detailArticle',compact('product'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }

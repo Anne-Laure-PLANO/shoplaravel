@@ -8,10 +8,10 @@
     <ul>
         @forelse ($products as $item)
             <li>
-                Produit numéro {{$loop->iteration}} : {{$item['nom']}}, {{$item['prix']}}€
+                Produit numéro {{$loop->iteration}} : {{$item->name}}, {{$item->price}}€ -> <a href="/product/{{$item->id}}"><button>Choisir</button></a>
             </li>
             @empty
-            <li>Aucun produit n'est disponible.</li>   
+            <li>Aucun produit n'est disponible.</li>
         @endforelse
     </ul>
 @endsection
