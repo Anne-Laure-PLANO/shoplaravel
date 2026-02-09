@@ -29,8 +29,6 @@ Route::get('/contact', [PageController::class, 'contact'])
 Route::get('/admin', [AdminController::class, 'dashboard'])
     ->name('admin.dashboard');
 
-Route::get('/admin/modifyProduct/{id}', [AdminController::class, 'modifyProduct'])
-    ->name('admin.modify.product');
 
 #affichage produit sélectionné :
 Route::resource('products', ProductController::class);

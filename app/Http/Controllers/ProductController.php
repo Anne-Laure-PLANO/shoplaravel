@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
-
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -33,17 +32,24 @@ class ProductController extends Controller
      */
     public function store(Request $request) #récupère les infos nouveau produit pour insertion BDD
     {
-        $product = new Product();
-        $product->category_id = $request->category_id;
-        $product->name = $request->name;
-        $product->slug = Str::slug($request->name);
-        $product->description = $request->description;
-        $product->image = $request->image;
-        $product->price = $request->price;
-        $product->stock = $request->stock;
-        $product->active = $request->active;
-        $product->save();
-    return redirect('/products');
+        $validated = $request->validate([
+            'category_id' => 'required|exists:categories,id', #s'assure que la clé existe bien dans la table categories
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0', #min:0 pour éviter les prix négatifs
+            'stock' => 'required|numeric|min:0'
+        ]);
+        $product =[
+            'category_id' => $validated['category_id'],
+            'name' => $validated['name'],
+            'slug' => Str::slug($validated['name'], '-'),
+            'description' => $request->description,
+            'image' => $request->image,
+            'price' => $validated['price'],
+            'stock' => $validated['stock'],
+            'active' => $request->boolean('active')
+        ];
+        Product::create($product);
+    return redirect()->route('admin.dashboard')->with('success', 'Produit créé avec succès!');
     }
 
     /**
@@ -52,7 +58,7 @@ class ProductController extends Controller
     public function show(int $id)
     {
         $product= Product::find($id);
-        return view('/products/detailArticle',compact('product'));
+        return view('.products.show',compact('product'));
     }
 
     /**
@@ -60,22 +66,44 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $categories = Category::all();
+        $product = Product::find($id);
+        return view('products.edit', compact('product'), compact('categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $id)
     {
-        //
+        $validated = $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'name'        => 'required|string|max:255',
+            'price'       => 'required|numeric|min:0',
+            'stock'       => 'required|numeric|min:0',
+        ]);
+        $data =[
+            'category_id' => $validated['category_id'],
+            'name' => $validated['name'],
+            'slug' => Str::slug($validated['name'], '-'),
+            'description' => $request->description,
+            'image' => $request->image,
+            'price' => $validated['price'],
+            'stock' => $validated['stock'],
+            'active' => $request->boolean('active')
+        ];
+        Product::findOrFail($id)->update($data);
+        return redirect()->route('admin.dashboard')->with('success', 'Produit modifié avec succès !');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $data = Product::findOrFail($id);
+        $data->delete();
+        return redirect()->route('admin.dashboard')->with('success', 'Produit supprimé avec succès !');
     }
 }

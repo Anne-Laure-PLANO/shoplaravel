@@ -4,7 +4,7 @@
 
 @section('content')
     <h1>Enregistrement d'un nouveau produit</h1>
-    <form action="{{Route('products.create')}}" method="POST">
+    <form action="{{Route('products.store')}}" method="POST">
     @CSRF
         <p>Veuillez saisir les informations produit :</p>
         <div>
@@ -20,9 +20,9 @@
             <label for="image">lien image :</label>
             <input type="text" name="image" value = "{{old('image')}}" id="image"><br>
             <label for="price">prix :*</label>
-            <input type="number" name="price" value = "{{old('price')}}" id="price"><br>
-            <label for="stock">stock :*</label>
-            <input type="number" name="stock" value = "{{old('stock')}}" id="stock"><br>br
+            <input type="number" name="price" step = "0.01" value = "{{old('price')}}" id="price"><br>
+            <label for="stock">stock :</label>
+            <input type="number" name="stock" value = "{{old('stock')}}" id="stock"><br>
             <p> Affichage immédiat ?
                 <label for="actived"> Oui </label>
                 <input type="radio" name="active" value = "true" id="actived" checked>
