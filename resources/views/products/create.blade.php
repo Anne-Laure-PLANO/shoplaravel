@@ -15,14 +15,29 @@
             </select><br>
             <label for="name">nom :*</label>
             <input type="text" name="name" value = "{{old('name')}}" id="name"><br>
+                @error('name')
+                    <div class ="invalid-feedback d-block"><span> Error : {{$message}} </span></div>
+                @enderror
             <label for="description">description :</label>
             <input type="text" name="description" value = "{{old('description')}}" id="description"><br>
+                @error('description')
+                    <div class ="invalid-feedback d-block"><span> Error : {{$message}} </span></div>
+                @enderror
             <label for="image">lien image :</label>
             <input type="text" name="image" value = "{{old('image')}}" id="image"><br>
+                @error('image')
+                    <div class ="invalid-feedback d-block"><span> Error : {{$message}} </span></div>
+                @enderror
             <label for="price">prix :*</label>
             <input type="number" name="price" step = "0.01" value = "{{old('price')}}" id="price"><br>
+            @error('price')
+                <div class ="invalid-feedback d-block"><span> Error : {{$message}} </span></div>
+            @enderror
             <label for="stock">stock :</label>
-            <input type="number" name="stock" value = "{{old('stock')}}" id="stock"><br>
+            <input type="number" name="stock" value = "{{old('stock', 0)}}" id="stock"><br>
+                @error('stock')
+                    <div class ="invalid-feedback d-block"><span> Error : {{$message}} </span></div>
+                @enderror
             <p> Affichage immédiat ?
                 <label for="actived"> Oui </label>
                 <input type="radio" name="active" value = "true" id="actived" checked>
