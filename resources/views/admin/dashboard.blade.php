@@ -17,17 +17,7 @@
                 <div class="card-body">
 
                     <h2 class="card-title">{{ $product->name }}</h2>
-
-                    <p class="mb-1">
-                        <strong>Catégorie :</strong>
-                        @foreach($categories as $category)
-                            @if($category->id == $product->category_id)
-                                {{ $category->name }}
-                                @break
-                            @endif
-                        @endforeach
-                    </p>
-
+                    <p class="mb-1"><strong>Catégorie :</strong> {{ $product->category->name }}</p>
                     <p class="mb-1"><strong>Description :</strong> {{ $product->description }}</p>
                     <p class="mb-1"><strong>Image :</strong> {{ $product->image }}</p>
                     <p class="mb-1"><strong>Prix :</strong> {{ $product->price }} €</p>

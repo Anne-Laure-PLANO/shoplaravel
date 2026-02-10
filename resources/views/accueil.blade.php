@@ -7,6 +7,7 @@
     <p>Ceci est mon paragraphe. Bienvenue.</p>
 
     <a href="{{route('products.index')}}"><button> Accéder à notre catalogue </button></a><br><br>
+    <a href="{{route('categories.index')}}"><button> Nos  catégories de produit</button></a> <br><br>
     <a href="{{route('contact')}}"><button> Nous contacter </button></a> <br><br>
     <a href="{{route('about')}}"><button> A propos de nous </button></a>
 

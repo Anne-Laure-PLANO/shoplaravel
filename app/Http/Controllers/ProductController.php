@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('category')->get();
         return view('/products/index', compact('products'));
     }
 
@@ -55,9 +55,8 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(Product $product) # récupère l'id
     {
-        $product= Product::find($id);
         return view('.products.show',compact('product'));
     }
 
@@ -67,8 +66,8 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $categories = Category::all();
-        $product = Product::find($id);
-        return view('products.edit', compact('product'), compact('categories'));
+        $product = Product::with('category')->findOrFail($id);
+        return view('products.edit', compact('product', 'categories'));
     }
 
     /**

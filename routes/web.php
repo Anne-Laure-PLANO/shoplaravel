@@ -1,13 +1,12 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/',[PageController::class,'home'])->name('welcome');
 
 
 Route::get('/hello',function(){
@@ -32,7 +31,7 @@ Route::get('/admin', [AdminController::class, 'dashboard'])
 
 #affichage produit sélectionné :
 Route::resource('products', ProductController::class);
-
+Route::resource('categories', CategoryController::class);
 
 
 
