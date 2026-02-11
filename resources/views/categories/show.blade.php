@@ -12,5 +12,10 @@
             <p>Aucun produit n'est disponible.</p>
         @endforelse
     </ul>
-    {{$products->links()}}
+    <div class="row">
+        <div class="col d-flex justify-content-center m-5">
+
+            {{$products->links()}}
+        </div>
+    </div>
 @endsection

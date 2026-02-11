@@ -39,7 +39,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $products = $category->products()->with('category')->paginate(5);
+        $products = $category->products()->with('category')->paginate(10);
         return view('categories.show', compact('category','products'));
         }
 

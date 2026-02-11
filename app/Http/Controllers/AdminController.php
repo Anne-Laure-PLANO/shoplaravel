@@ -10,7 +10,7 @@ class AdminController extends Controller
 {
     //
     public function dashboard(){
-        $products = Product::with('category')->get();
+        $products = Product::with('category')->paginate(10);
         return view('admin.dashboard', compact('products'));
     }
 

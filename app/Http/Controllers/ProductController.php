@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -14,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('category')->get();
+        $products = Product::with('category')->paginate(10);
         return view('/products/index', compact('products'));
     }
 
@@ -30,26 +31,24 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) #récupère les infos nouveau produit pour insertion BDD
+    public function store(StoreProductRequest $request) #récupère les infos nouveau produit pour insertion BDD
     {
-        $validated = $request->validate([
-            'category_id' => 'required|exists:categories,id', #s'assure que la clé existe bien dans la table categories
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0', #min:0 pour éviter les prix négatifs
-            'stock' => 'required|numeric|min:0'
-        ]);
-        $product =[
-            'category_id' => $validated['category_id'],
-            'name' => $validated['name'],
-            'slug' => Str::slug($validated['name'], '-'),
-            'description' => $request->description,
-            'image' => $request->image,
-            'price' => $validated['price'],
-            'stock' => $validated['stock'],
-            'active' => $request->boolean('active')
-        ];
+        $product = $request->validated();
+
+        $slug = Str::slug($product['name']);
+        $slugDefinitif = $slug;
+        $counter = 1;
+        #Pour s'assurer d'avoir un slug unique
+        while (Product::where('slug',$slug)->where('id','!=',$product['id'])->exists()) {
+            $slugDefinitif = $slug . '-' . $counter;
+            $counter++;
+        };
+
+        $product['slug'] = $slugDefinitif;
+
         Product::create($product);
-    return redirect()->route('admin.dashboard')->with('success', 'Produit créé avec succès!');
+    return redirect()->route('admin.dashboard')
+        ->with('success', 'Produit créé avec succès!');
     }
 
     /**
@@ -73,26 +72,24 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(StoreProductRequest $request, Product $product)
     {
-        $validated = $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'name'        => 'required|string|max:255',
-            'price'       => 'required|numeric|min:0',
-            'stock'       => 'required|numeric|min:0',
-        ]);
-        $data =[
-            'category_id' => $validated['category_id'],
-            'name' => $validated['name'],
-            'slug' => Str::slug($validated['name'], '-'),
-            'description' => $request->description,
-            'image' => $request->image,
-            'price' => $validated['price'],
-            'stock' => $validated['stock'],
-            'active' => $request->boolean('active')
-        ];
-        Product::findOrFail($id)->update($data);
-        return redirect()->route('admin.dashboard')->with('success', 'Produit modifié avec succès !');
+        $data = $request->validated();
+
+        $slug = Str::slug($product['name']);
+        $slugDefinitif = $slug;
+        $counter = 1;
+        #Pour s'assurer d'avoir un slug unique
+        while (Product::where('slug',$slug)->where('id','!=',$product['id'])->exists()) {
+            $slugDefinitif = $slug . '-' . $counter;
+            $counter++;
+        };
+
+        $product['slug'] = $slugDefinitif;
+        $product->update($data);
+
+        return redirect()->route('admin.dashboard')
+            ->with('success', 'Produit modifié avec succès !');
     }
 
 

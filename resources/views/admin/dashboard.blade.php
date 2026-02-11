@@ -49,5 +49,7 @@
             </div>
         @endforelse
 
+            {{$products->links()}}
+
     </div>
 @endsection

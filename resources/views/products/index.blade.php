@@ -6,6 +6,7 @@
     <h1>Notre catalogue</h1>
     <p>Voici la liste de nos produits : </p>
     <div class="row">
+
         @forelse ($products as $product)
             <div class="col-sm-6 col-md-4 mb-4">
                 <div class="card h-100">
@@ -32,9 +33,12 @@
                         <a href="{{route('products.show', $product)}}">voir le détail</a>
 
                         <!-- Bouton Ajouter au panier -->
-                        <a href=" " class="btn btn-primary mt-auto">
-                            Ajouter au panier
-                        </a>
+                        <form action="{{route('cart.addItem',$product)}}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <button type='submit' class="btn btn-primary mt-auto"> Ajouter au panier </button>
+                        </form>
+
                     </div>
                 </div>
             </div>
@@ -42,5 +46,6 @@
             @empty
             <p>Aucun produit n'est disponible.</p>
         @endforelse
+        {{$products->links()}}
     </div>
 @endsection

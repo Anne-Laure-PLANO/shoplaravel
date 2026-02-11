@@ -55,11 +55,11 @@
                             <div class="mb-3">
                                 <p>Produit affiché ?</p>
                                 <div class="form-check form-check-inline">
-                                    <input type="radio" name="active" value="true" id="actived" class="form-check-input" {{ old('active', $product->active) ? 'checked' : '' }}>
+                                    <input type="radio" name="active" value='1' id="actived" class="form-check-input" {{ old('active', $product->active) ? 'checked' : '' }}>
                                     <label for="actived" class="form-check-label">Oui</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input type="radio" name="active" value="false" id="inactived" class="form-check-input" {{ old('active', !$product->active) ? 'checked' : '' }}>
+                                    <input type="radio" name="active" value='0' id="inactived" class="form-check-input" {{ old('active', !$product->active) ? 'checked' : '' }}>
                                     <label for="inactived" class="form-check-label">Non</label>
                                 </div>
                             </div>
