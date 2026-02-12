@@ -8,7 +8,7 @@
         <h1 class="text-center mb-4">Mon panier</h1>
 
         <div class="card shadow-sm p-4">
-            @forelse($cart as $item)
+            @forelse($cart as $product_id => $item)
                 <!-- Bloc articles -->
 
                 <div class="card mb-4 border-0 shadow-sm">
@@ -33,25 +33,28 @@
                                 <div class="d-flex flex-column align-items-center gap-3">
 
                                     <div class="d-flex align-items-center gap-3">
-
-                                        <button class="btn btn-outline-dark btn-sm">
-                                            -
-                                        </button>
-
+                                        <a href="{{route('cart.decreaseQuantity', $product_id)}}">
+                                            <button type='submit' class="btn btn-outline-dark btn-sm">
+                                                -
+                                            </button>
+                                        </a>
                                         <p class="mb-0">
-                                            Quantité sélectionnée : {{$item['quantity']}}
+                                            Quantité : {{$item['quantity']}}
                                         </p>
-
-                                        <button class="btn btn-outline-dark btn-sm">
-                                            +
-                                        </button>
-
+                                        <a href="{{route('cart.increaseQuantity', $product_id)}}">
+                                            <button type='submit' class="btn btn-outline-dark btn-sm">
+                                                +
+                                            </button>
+                                        </a>
                                     </div>
 
                                     <div>
-                                        <button class="btn btn-outline-danger btn-sm">
-                                            Supprimer article
-                                        </button>
+                                        <a href="{{route('cart.removeItem', $product_id)}}">
+                                            <button class="btn btn-outline-danger btn-sm">
+                                                Supprimer l'article
+                                            </button>
+                                        </a>
+                                        </form>
                                     </div>
 
                                 </div>
@@ -88,14 +91,19 @@
                 <div class="mb-3 mb-md-0">
                     <h5 class="fw-bold mb-0">
                         Prix total panier :
-                        <span class="text-success"> €</span>
+                        <span class="text-success"> {{number_format($total, 2 , ',' , ' ')}}€</span>
                     </h5>
                 </div>
 
                 <div class="d-flex gap-3">
-                    <button class="btn btn-outline-danger">
-                        Supprimer panier
-                    </button>
+                    <form action="{{route('cart.clearCart')}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-outline-danger">
+                            Supprimer panier
+                        </button>
+                    </form>
+
                     <button class="btn btn-success">
                         Passer commande
                     </button>

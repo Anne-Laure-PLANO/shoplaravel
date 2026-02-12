@@ -37,8 +37,8 @@ Route::resource('categories', CategoryController::class);
 # pour CartController :
 Route::get('/cart/', [CartController::class, 'displayCart'])->name('cart.display');
 Route::put('/cart/add/{product}', [CartController::class, 'addItem'])->name('cart.addItem');
-Route::put('/cart/increase/{product}', [CartController::class, 'increaseQuantity'])->name('cart.increaseQuantity');
-Route::put('/cart/decrease/{product}', [CartController::class, 'decreaseQuantity'])->name('cart.decreaseQuantity');
+Route::get('/cart/increase/{productId}', [CartController::class, 'increaseQuantity'])->name('cart.increaseQuantity');
+Route::get('/cart/decrease/{productId}', [CartController::class, 'decreaseQuantity'])->name('cart.decreaseQuantity');
 Route::delete('/cart/deleteItem/{product}', [CartController::class, 'removeItem'])->name('cart.removeItem');
 Route::delete('/cart/clearCart', [CartController::class, 'clearCart'])->name('cart.clearCart');
 

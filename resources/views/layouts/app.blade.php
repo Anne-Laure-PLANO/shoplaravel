@@ -24,10 +24,18 @@
             </div>
 
              <!-- Bouton hamburger pour mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <!-- Bouton hamburger pour mobile avec compteur -->
+            <button class="navbar-toggler position-relative" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+
+                <!-- Badge compteur -->
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{$cartCount ?? 0}}
+                    <span class="visually-hidden">articles dans le panier</span>
+                </span>
             </button>
+
 
             <!-- Navigation à droite -->
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -41,8 +49,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('products.index')}}">Produits</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('cart.display',1)}}">Panier</a>
+                    <<li class="nav-item position-relative">
+                        <a class="nav-link" href="{{ route('cart.display') }}">
+                            Panier
+                            <!-- Badge compteur -->
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{$cartCount ?? 0}}
+                                <span class="visually-hidden">articles dans le panier</span>
+                            </span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('contact')}}">Contact</a>

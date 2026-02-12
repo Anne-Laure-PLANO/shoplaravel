@@ -16,10 +16,15 @@ class CartController extends Controller
      */
     public function displayCart()
     {
+        $total = 0 ;
+
         $cart = session('cart', []);
 
+    foreach ($cart as $product) {
+        $total += $product['quantity'] * $product['price'];
+    }
 
-        return view('carts.index', compact('cart'));
+        return view('carts.index', compact('cart', 'total'));
     }
 
     /**
@@ -27,8 +32,9 @@ class CartController extends Controller
      */
     public function addItem(Product $product)
     {
+        $productId = $product['id'];
         $cart = collect(session('cart', []));
-        if ($cart->has($product->id)) {
+        if ($cart->has($productId)) {
             $cart = $cart->map(function ($item) use ($product) {
                 if ($item['product_id'] === $product->id) {
                     $item['quantity']++;
@@ -51,28 +57,69 @@ class CartController extends Controller
     }
 
 
-    public function increaseQuantity()
+    public function increaseQuantity(int $product_id)
     {
-//
+        $cart = collect(session('cart', []));
+        if ($cart->has($product_id)){
+            $cart = $cart->map(function ($item) use ($product_id) {
+                if ($item['product_id'] === $product_id) {
+                    $item['quantity']++;
+                }
+                return $item;
+            });
+            session(['cart' => $cart->toArray()]);
+            return back()-> with('success', 'La quantité a bien été modifiée');
+
+        } else {
+        return back()-> with('error', 'Produit introuvable');
+        }
 
     }
-    public function decreaseQuantity()
+    public function decreaseQuantity(int $product_id)
     {
+        $cart = collect(session('cart', []));
+        if ($cart->has($product_id)){
+            $cart = $cart->map(function ($item) use ($product_id) {
+                if ($item['product_id'] === $product_id) {
+                    if ($item['quantity'] <= 1) {
+                        $this->removeItem($product_id);
 
+                    } else {
+                        $item['quantity']--;
+                    }
+                }
+                return $item;
+            });
+            session(['cart' => $cart->toArray()]);
+            return back()-> with('success', 'La quantité a bien été modifiée');
+
+        } else {
+            return back()-> with('error', 'Produit introuvable');
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
 
 
     /**
      * Remove the specified resource from storage.
      */
-    public function removeItem (string $id)
+    public function removeItem (int $product_id)
     {
-        //
+        $cart = collect(session('cart', []));
+        if ($cart->has($product_id)){
+            $cart->map(function ($item) use ($product_id) {
+                if ($item['product_id'] === $product_id) {
+                    $item->forget($product_id);
+                }
+                return $item;
+            });
+            session(['cart' => $cart->toArray()]);
+            return back()->with('success', 'produit supprimé du panier avec success');
+        }
+        return back()->with('error', 'Produit introuvable');
     }
+
     public function clearCart()
     {
         //
