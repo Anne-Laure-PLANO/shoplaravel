@@ -4,7 +4,11 @@
 # get /home
 @section('content')
     <h1>Bienvenue sur mon site commercial</h1>
-    <p>Ceci est mon paragraphe. Bienvenue.</p>
+    @auth
+    <p>Bienvenue:  {{auth()->user()->last_name}}</p>
+    @else
+        <p>Bienvenue</p>
+    @endauth
 
     <a href="{{route('products.index')}}"><button> Accéder à notre catalogue </button></a><br><br>
     <a href="{{route('categories.index')}}"><button> Nos  catégories de produit</button></a> <br><br>
