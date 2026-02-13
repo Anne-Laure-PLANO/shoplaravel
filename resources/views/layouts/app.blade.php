@@ -40,16 +40,20 @@
             <!-- Navigation à droite -->
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
+ @auth()
+     @if (auth()->User()->is_admin)
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{route('admin.dashboard')}}">Administrateur</a>
                     </li>
+     @endif
+@endauth
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{route('home')}}">Accueil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('products.index')}}">Produits</a>
                     </li>
-                    <<li class="nav-item position-relative">
+                    <li class="nav-item position-relative">
                         <a class="nav-link" href="{{ route('cart.display') }}">
                             Panier
                             <!-- Badge compteur -->
@@ -65,6 +69,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('about')}}">À propos</a>
                     </li>
+     @auth()
+                <form action="{{route('auth.logout')}}" method="post">
+                    @csrf
+                     <li class="nav-item">
+                         <input class="nav-link" type="submit" value="Deconnexion">
+                     </li>
+                </form>
+     @else
+                     <li class="nav-item">
+                         <a class="nav-link" href="{{route('auth.showForm')}}">S'identifier</a>
+                     </li>
+     @endauth
                 </ul>
             </div>
         </div>

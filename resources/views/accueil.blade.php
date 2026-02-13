@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Accueil')
-# get /home
+
 @section('content')
     <h1>Bienvenue sur mon site commercial</h1>
     @auth
